@@ -1,27 +1,22 @@
 import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 import Card from './components/Card';
 import Header from './components/Header';
 import StickyMap from './components/StickyMap';
 
+import { dummyTags } from './DummyTags';
+
 export default class App extends Component<Props> {
   render() {
-    const dummyTags = [
-      { id: 1, title: 'First Tag'},
-      { id: 2, title: 'Second Tag'},
-      { id: 3, title: 'Third Tag'},
-      { id: 4, title: 'Fourth Tag'},
-      { id: 5, title: 'Fifth Tag'},
-      { id: 6, title: 'Sixth Tag'},
-      { id: 6, title: 'Seventh Tag'},
-    ]
     return (
       <View style={styles.container}>
         <Header headerText="Tagline" />
         <StickyMap numTags={ dummyTags.length } />
         <FlatList
           data={dummyTags}
+          keyExtractor={ item => item.title }
           renderItem={({ item }) => <Card tag={ item } />} />
       </View>
     );
@@ -34,3 +29,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
 });
+
+EStyleSheet.build();

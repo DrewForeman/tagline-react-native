@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 import { colorText } from '../styles';
 
@@ -13,14 +14,14 @@ export default class StickyMap extends Component<Props> {
     return (
       <View style={ container }>
         { data.map(tag => (
-          <View key={ tag.id } style={ tagNode } />
+          <View key={ tag.key } style={ tagNode } />
         )) }
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   container: {
     backgroundColor: colorText,
     height: 120,
@@ -30,7 +31,8 @@ const styles = StyleSheet.create({
   },
   tagNode: {
     backgroundColor: '#FFFFFF',
-    height: 10,
-    width: 10,
+    height: 16,
+    width: 16,
+    borderRadius: 50,
   },
 });

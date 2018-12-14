@@ -1,24 +1,28 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-import { colorTextLight } from '../styles';
+import CardDetails from './CardDetails';
 
 export default class Card extends Component<Props> {
   render() {
-    const { title } = this.props.tag;
+    const { asset, ...tag } = this.props.tag;
+    const { cardContainer, imgContainer, tagImage } = styles;
     return (
-      <View style={styles.container}>
-        <Text>{ title }</Text>
+      <View style={ cardContainer }>
+        <View style={ imgContainer }>
+          <Image resizeMode="cover" style={ tagImage } source={ { uri: asset } } />
+          <CardDetails tag={ tag }/>
+        </View>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
+const styles = EStyleSheet.create({
+  cardContainer: {
     borderWidth: 1,
     borderRadius: 2,
-    backgroundColor: colorTextLight,
     borderColor: '#ddd',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -28,6 +32,16 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
     marginTop: 10,
-    height: 300,
+    marginBottom: 10,
+    height: 500,
   },
+  imgContainer: {
+    height: 300,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  tagImage: {
+    width: '100%',
+    height: '100%',
+  }
 });
