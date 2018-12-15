@@ -3,14 +3,29 @@ import { Image, Text, View } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 import CardDetails from './CardDetails';
+import { colorText, colorTextMedium, textSmall } from '../styles';
+
+const OwnerDetails = ({name, image}) => {
+  const { ownerDetailsWrapper, userInfo, userImage, userDetails } = styles;
+  return (
+    <View style={ ownerDetailsWrapper }>
+      <Image style={ userImage } source={ { uri: image } }/>
+      <View style={ userInfo }>
+        <Text>{ name }</Text>
+        <Text style={ userDetails }>2 months ago</Text>
+      </View>
+    </View>
+  )
+}
 
 export default class Card extends Component<Props> {
   render() {
-    const { asset, ...tag } = this.props.tag;
+    const { asset, owner, ...tag } = this.props.tag;
     const { cardContainer, imgContainer, tagImage } = styles;
     return (
       <View style={ cardContainer }>
         <View style={ imgContainer }>
+          <OwnerDetails name={ owner.name } image={ owner.image } />
           <Image resizeMode="cover" style={ tagImage } source={ { uri: asset } } />
           <CardDetails tag={ tag }/>
         </View>
@@ -21,6 +36,7 @@ export default class Card extends Component<Props> {
 
 const styles = EStyleSheet.create({
   cardContainer: {
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderRadius: 2,
     borderColor: '#ddd',
@@ -30,10 +46,12 @@ const styles = EStyleSheet.create({
     shadowRadius: 2,
     elevation: 1,
     marginLeft: 5,
-    marginRight: 5,
+    marginRight: 20,
     marginTop: 10,
     marginBottom: 10,
-    height: 500,
+    flex: 1,
+    width: '$cardWidth',
+    color: colorText,
   },
   imgContainer: {
     height: 300,
@@ -43,5 +61,22 @@ const styles = EStyleSheet.create({
   tagImage: {
     width: '100%',
     height: '100%',
+  },
+  ownerDetailsWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: 5,
+  },
+  userImage: {
+    height: 36,
+    width: 36,
+    borderRadius: 18,
+  },
+  userInfo: {
+    marginLeft: 10,
+  },
+  userDetails: {
+    color: colorTextMedium,
+    fontSize: textSmall,
   }
 });

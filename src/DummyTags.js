@@ -9,7 +9,7 @@ const OWNER_1 = {
 
 const OWNER_2 = {
     name: 'Nathan Hale',
-    image: 'https://randomuser.me/api/portraits/thumb/men/79.jpg',
+    image: 'https://randomuser.me/api/portraits/thumb/men/65.jpg',
 }
 
 const OWNER_3 = {
