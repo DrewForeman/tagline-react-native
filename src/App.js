@@ -6,13 +6,31 @@ import Card from './components/Card';
 import Header from './components/Header';
 import StickyMap from './components/StickyMap';
 
-import { dummyTags } from './DummyTags';
+// import { dummyTags } from './DummyTags';
 import { textColorLight } from './styles'
+
+import axios from 'axios';
+
+const axiosApi = axios.create({
+  baseURL: 'http://127.0.0.1:5000'
+})
 
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { currentTagIdx: 0 }
+    this.state = { tags: [], currentTagIdx: 0 }
+  }
+
+  componentDidMount() {
+      this.getTags();
+  }
+
+  getTags(){
+    return axiosApi.get('/tags').then(response => {
+      this.setState({ tags: response.data.tags })
+    }).catch(error => {
+      console.log('there was an error')
+    })
   }
 
   onListChange = ({ viewableItems }) => {
@@ -21,16 +39,22 @@ export default class App extends Component<Props> {
   }
 
   render() {
+    const {currentTagIdx, tags} = this.state;
+
+    if (!tags.length) {
+      return null;
+    }
+    console.log('tags', tags)
     return (
       <View style={styles.container}>
         <Header headerText="Tagline" />
-        <StickyMap currentTagIdx={ this.state.currentTagIdx }
-                   numTags={ dummyTags.length } />
+        <StickyMap currentTagIdx={ currentTagIdx }
+                   numTags={ tags.length } />
         <FlatList
-          data={dummyTags}
+          data={tags}
           horizontal
           onViewableItemsChanged={ this.onListChange }
-          keyExtractor={ item => item.title }
+          keyExtractor={item => item.id}
           renderItem={({ item }) => <Card tag={ item } />} />
       </View>
     );

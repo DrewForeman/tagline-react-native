@@ -4,6 +4,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 import { colorText, colorTextLight, colorSecondary } from '../styles';
 
+// TODO: make nav nodes clickable and scroll to next
 const StickyMap = ({ currentTagIdx, numTags }) => {
   const {
     container,
