@@ -44,7 +44,7 @@ export default class App extends Component<Props> {
     if (!tags.length) {
       return null;
     }
-    console.log('tags', tags)
+
     return (
       <View style={styles.container}>
         <Header headerText="Tagline" />

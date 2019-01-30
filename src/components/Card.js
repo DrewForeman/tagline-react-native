@@ -20,8 +20,6 @@ const OwnerDetails = ({name, image}) => {
 
 export default class Card extends Component<Props> {
   render() {
-    console.log('tag', this.props.tag)
-
     const { asset, owner, ...tag } = this.props.tag;
     const { cardContainer, imgContainer, tagImage } = styles;
     return (
