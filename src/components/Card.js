@@ -5,6 +5,8 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import CardDetails from './CardDetails';
 import { colorText, colorTextMedium, textSmall } from '../styles';
 
+const defaultImage = 'https://oaklandartmurmur.org/wp-content/uploads/2015/04/Uptown-Art-Park-500x333.jpg';
+
 const OwnerDetails = ({name, image}) => {
   const { ownerDetailsWrapper, userInfo, userImage, userDetails } = styles;
   return (
@@ -20,13 +22,15 @@ const OwnerDetails = ({name, image}) => {
 
 export default class Card extends Component<Props> {
   render() {
-    const { asset, owner, ...tag } = this.props.tag;
+    const { primary_image: primaryImage, owner, ...tag } = this.props.tag;
     const { cardContainer, imgContainer, tagImage } = styles;
     return (
       <View style={ cardContainer }>
         <View style={ imgContainer }>
-          <OwnerDetails name={ owner.name } image={ owner.image } />
-          <Image resizeMode="cover" style={ tagImage } source={ { uri: asset } } />
+          { owner &&
+            <OwnerDetails name={ owner.name } image={ owner.image } />
+          }
+          <Image resizeMode="cover" style={ tagImage } source={ { uri: primaryImage || defaultImage } } />
           <CardDetails tag={ tag }/>
         </View>
       </View>
