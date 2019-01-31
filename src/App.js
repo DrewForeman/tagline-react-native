@@ -48,7 +48,7 @@ export default class App extends Component<Props> {
     return (
       <View style={styles.container}>
         <Header headerText="Tagline" />
-        <Map tags={ tags }/>
+        <Map onMapReady={this.getTags} tags={ tags }/>
         <StickyMap currentTagIdx={ currentTagIdx }
                    numTags={ tags.length } />
         <FlatList
