@@ -4,11 +4,11 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import axios from 'axios';
 
 import MapView, { Marker } from 'react-native-maps';
-import SearchBar from 'react-native-search-bar'
+import { SearchBar } from 'react-native-elements';
 
+import TagCarousel from './TagCarousel';
 import markerImg from '../img/marker-grey.png'
-
-const gooleMapsApi = 'https://maps.googleapis.com/maps/api/directions/json?';
+import { mapWidth } from '../styles';
 
 // Placeholder values
 const initialLat = 37.806463;
@@ -22,38 +22,25 @@ export default class Map extends Component<Props> {
   constructor(props) {
     super(props)
     this.state = {
-      origin: '4600 Adeline St., Emeryville, CA', // TODO: set this based on geolocation
-      destination: null,
-      showSearchBars: true,
+      location: '4600 Adeline St., Emeryville, CA', // TODO: set this based on geolocation
     };
-    this.updateDestination = this.updateDestination.bind(this);
-    this.clearDestination = this.clearDestination.bind(this);
-    this.getDirections = this.getDirections.bind(this);
-    this.toggleSearchBars = this.toggleSearchBars.bind(this);
+    this.updateLocation = this.updateLocation.bind(this);
+    this.getLocation = this.getLocation.bind(this);
+    this.clearLocation = this.clearLocation.bind(this);
   }
 
-  componentDidMount() {
-      this.refs.originSearchBar.unFocus()
-      this.refs.searchBar.focus()
-  }
-
-  updateDestination(e) {
-    this.setState({destination:e})
+  updateLocation(e) {
+    this.setState({location:e})
     console.log('updated destination:', this.state.destination)
   }
 
-  clearDestination() {
-    this.setState({destination:null})
+  clearLocation() {
+    this.setState({location:null})
     console.log('cleared destination')
   }
 
-  getDirections() {
-    console.log('getting directions')
-    console.log(this.state.origin, this.state.destination)
-    const {origin, destination} = this.state;
-    // 1. display the route, potentially using react-native-maps-directions
-    // 2. call get tags api with origin/destination params
-    this.toggleSearchBars()
+  getLocation() {
+    // call google api to get location
   }
 
   toggleSearchBars() {
@@ -65,23 +52,14 @@ export default class Map extends Component<Props> {
     console.log(navigator)
     return (
       <View>
-        { this.state.showSearchBars &&
-          <View>
-            <SearchBar
-              searchBarStyle="minimal"
-              ref='originSearchBar'
-              placeholder={this.state.origin}
-            />
-            <SearchBar
-              searchBarStyle="minimal"
-              ref='searchBar'
-              placeholder='Where are you going?'
-              onChangeText={this.updateDestination}
-              onSearchButtonPress={this.getDirections}
-              onCancelButtonPress={this.clearDestination}
-            />
-          </View>
-        }
+        <SearchBar
+          platform="ios"
+          containerStyle={styles.search}
+          ref='searchBar'
+          value={this.state.location}
+          onChangeText={this.updateLocation}
+          onCancel={this.clearLocation}
+        />
         <MapView
           initialRegion={{
             latitude: initialLat,
@@ -101,6 +79,7 @@ export default class Map extends Component<Props> {
             />
           ))}
          </MapView>
+         <TagCarousel tags={tags}/>
        </View>
     );
   }
@@ -108,7 +87,10 @@ export default class Map extends Component<Props> {
 
 const styles = EStyleSheet.create({
   map: {
-    height: '$mapHeight',
-    width: '$mapWidth',
+    height: 400,
+    width: mapWidth,
   },
+  search: {
+    marginTop: 28,
+  }
 });

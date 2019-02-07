@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-import Card from './components/Card';
-import Header from './components/Header';
+import Footer from './components/Footer';
 import Map from './components/Map';
-import StickyMap from './components/StickyMap';
 
 import { textColorLight } from './styles'
 
@@ -33,30 +31,15 @@ export default class App extends Component<Props> {
     })
   }
 
-  onListChange = ({ viewableItems }) => {
-    // TODO: find a better way to handle
-      this.setState({ currentTagIdx: viewableItems[0].index })
-  }
-
   render() {
     const {currentTagIdx, tags} = this.state;
-    console.log('tags',tags);
     if (!tags.length) {
       return null;
     }
-
     return (
       <View style={styles.container}>
-        <Header headerText="Tagline" />
         <Map onMapReady={this.getTags} tags={ tags }/>
-        <StickyMap currentTagIdx={ currentTagIdx }
-                   numTags={ tags.length } />
-        <FlatList
-          data={tags}
-          horizontal
-          onViewableItemsChanged={ this.onListChange }
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => <Card tag={ item } />} />
+        <Footer />
       </View>
     );
   }
@@ -64,17 +47,9 @@ export default class App extends Component<Props> {
 
 const styles = EStyleSheet.create({
   container: {
-    // flex: 1,
     ...StyleSheet.absoluteFillObject,
     backgroundColor: textColorLight,
   },
 });
 
-let {height, width} = Dimensions.get('window').width;
-
-// TODO: set constants for header, sticky sizes
-EStyleSheet.build({
-  $mapHeight: Dimensions.get('window').height - 80 - 90,
-  $mapWidth: Dimensions.get('window').width + 10,
-  $cardWidth: Dimensions.get('window').width - 10,
-});
+EStyleSheet.build();
