@@ -8,7 +8,7 @@ import { SearchBar } from 'react-native-elements';
 
 import TagCarousel from './TagCarousel';
 import markerImg from '../img/marker-grey.png'
-import { mapWidth } from '../styles';
+import { mapHeight, mapWidth } from '../styles';
 
 // Placeholder values
 const initialLat = 37.806463;
@@ -87,7 +87,7 @@ export default class Map extends Component<Props> {
 
 const styles = EStyleSheet.create({
   map: {
-    height: 400,
+    height: mapHeight,
     width: mapWidth,
   },
   search: {

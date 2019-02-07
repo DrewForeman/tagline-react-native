@@ -22,3 +22,4 @@ export const sliderWidth = viewportWidth;
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 export const mapWidth = viewportWidth;
+export const mapHeight = viewportHeight - 320;

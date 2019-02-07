@@ -8,26 +8,28 @@ import { colorLight, colorDark, colorShadow, textSmall } from '../styles';
 export default class TagCard extends Component<Props> {
 
   render() {
-    const { tag } = this.props;
+    const { created, owner, primary_image: primaryImage, title } = this.props.tag;
     return (
       <Card containerStyle={styles.containerStyle}
             wrapperStyle={styles.wrapperStyle}>
-        <Image source={{uri: tag.asset}}
-              style={styles.primaryImage} />
+        { primaryImage &&
+          <Image source={{uri: primaryImage}}
+                style={styles.primaryImage} />
+        }
         <View style={styles.tagInfo}>
-        { tag.owner &&
+        { owner &&
             <View style={styles.ownerDetailsWrapper}>
               <Avatar rounded
                       size="small"
-                      source={{uri: tag.owner.image}} />
+                      source={{uri: owner.image}} />
               <View style={styles.userInfo}>
-                <Text style={styles.userTitle}>{tag.owner.name}</Text>
-                <Text style={styles.userDetails}>January 26</Text>
+                <Text style={styles.userTitle}>{owner.name}</Text>
+                <Text style={styles.userDetails}>{created}</Text>
               </View>
             </View>
           }
           <View style={styles.quoteContainer}>
-            <Text style={styles.titleText}>{tag.title}</Text>
+            <Text style={styles.titleText}>{title}</Text>
           </View>
         </View>
       </Card>
@@ -37,6 +39,7 @@ export default class TagCard extends Component<Props> {
 
 const styles = EStyleSheet.create({
   containerStyle: {
+    margin: 5,
     padding: 10,
     shadowOffset: { width: 0, height: 1 },
     shadowColor: colorShadow,
